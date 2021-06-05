@@ -18,7 +18,7 @@ spec:
       serviceAccountName: argo
       containers:
       - name: argo-webhook
-        image: madurad/bitbucket-with-argo-workflow
+        image: madurad/bitbucket-with-argo-workflow:latest
         env:
           - name: WH_REPO
             value: "bitbucket_handle"
