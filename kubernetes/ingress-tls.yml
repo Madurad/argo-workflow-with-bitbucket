@@ -1,0 +1,19 @@
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: argo-webhook-ingress
+  namespace: argo
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: 'true'
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: <host>
+    http:
+      paths:
+      - path: /webhook
+        backend:
+          serviceName: argo-webhook
+          servicePort: webhook
+  tls:
+  - secretName: <secret-name>

@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  namespace: argo
+  generateName: start-workflow-<git_repo_name>
+spec:
+  serviceAccountName: argo
+  entrypoint: start-workflow
+  arguments:
+    parameters:
+    - name: repo
+      value: <git_repo_full>
+    - name: revision
+      value: <git_revision>
+  templates:
+  - name: start-workflow
+    inputs:
+      artifacts:
+      - name: git-repo
+        path: /src
+        git:
+          repo: "{{workflow.parameters.repo}}"
+          revision: "{{workflow.parameters.revision}}"
+          sshPrivateKeySecret:
+            name: bitbucket-creds
+            key: id_rsa
+    metadata:
+      labels:
+        app: argo
+    container:
+      resources: 
+        requests:
+          cpu: 50m
+          memory: 50Mi
+        limits: 
+          cpu: 100m
+          memory: 100Mi
+      image: argoproj/argocli
+      workingDir: /src
+      args: ["submit", "argo.yml"]

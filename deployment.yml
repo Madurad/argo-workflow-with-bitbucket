@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: argo
+  name: argo-webhook
+  labels:
+    app: argo-webhook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: argo-webhook
+  template:
+    metadata:
+      labels:
+        app: argo-webhook
+    spec:
+      serviceAccountName: argo
+      containers:
+      - name: argo-webhook
+        image: madurad/bitbucket-with-argo-workflow
+        env:
+          - name: WH_REPO
+            value: "bitbucket_handle"
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 20m
+            memory: 20Mi
