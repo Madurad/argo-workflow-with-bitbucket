@@ -795,7 +795,7 @@ spec:
         - --auth-mode
         - client
         - --secure=false
-        image: argoproj/argocli:v3.0.7
+        image: madurad/argocli:v3.0.7
         name: argo-server
         ports:
         - containerPort: 2746
@@ -848,7 +848,7 @@ spec:
           value: admin
         - name: MINIO_SECRET_KEY
           value: password
-        image: minio/minio:RELEASE.2019-12-17T23-16-33Z
+        image: madurad/minio:RELEASE.2019-12-17T23-16-33Z
         lifecycle:
           postStart:
             exec:
@@ -892,7 +892,7 @@ spec:
       - env:
         - name: POSTGRES_PASSWORD
           value: password
-        image: postgres:12-alpine
+        image: madurad/postgres:12-alpine
         name: main
         ports:
         - containerPort: 5432
@@ -927,7 +927,7 @@ spec:
         - --configmap
         - workflow-controller-configmap
         - --executor-image
-        - argoproj/argoexec:v3.0.7
+        - madurad/argoexec:v3.0.7
         - --namespaced
         command:
         - workflow-controller
@@ -937,7 +937,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.name
-        image: argoproj/workflow-controller:v3.0.7
+        image: madurad/workflow-controller:v3.0.7
         livenessProbe:
           failureThreshold: 3
           httpGet:
